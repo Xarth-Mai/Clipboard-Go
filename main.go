@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io"
 	"net/http"
+	"os"
 	"os/exec"
 	"os/signal"
 	"strings"
@@ -15,9 +16,9 @@ import (
 
 // 服务器配置
 const (
-	port          = ":8777"          // 服务器监听端口
-	authPassword   = "1234"          // 硬编码的密码，用于身份验证
-	maxTimestamps  = 20               // 允许的最大时间戳数量
+	port          = ":8777" // 服务器监听端口
+	authPassword  = "1234"  // 硬编码的密码，用于身份验证
+	maxTimestamps = 20      // 允许的最大时间戳数量
 )
 
 // 记录使用过的时间戳及其顺序
@@ -107,9 +108,12 @@ func handleRequest(w http.ResponseWriter, r *http.Request) {
 			http.Error(w, "500 Internal Server Error", http.StatusInternalServerError)
 			return
 		}
-		w.Write([]byte(clipboardContent))
+		_, err = w.Write([]byte(clipboardContent))
+		if err != nil {
+			return
+		}
 	case http.MethodPost:
-		body, err := io.ReadAll(r.Body) // 去掉长度限制
+		body, err := io.ReadAll(r.Body)
 		if err != nil {
 			http.Error(w, "400 Bad Request", http.StatusBadRequest)
 			return
