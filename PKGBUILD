@@ -1,7 +1,8 @@
+# Maintainer: Your Name <your_email@example.com>
 pkgname=clipboard-go
-pkgver=1.0.2
+pkgver=1.0.1
 pkgrel=1
-pkgdesc="Share clipboard between 💻Linux & 📱iOS"
+pkgdesc="A simple clipboard management tool written in Go"
 arch=('any')
 url="https://github.com/Xarth-Mai/Clipboard-Go"
 license=('MPL2')
@@ -20,5 +21,5 @@ build() {
 package() {
   install -Dm755 "${srcdir}/Clipboard-Go-${pkgver}/${pkgname}" "${pkgdir}/usr/bin/${pkgname}"
   install -Dm644 "${srcdir}/Clipboard-Go-${pkgver}/config.json" "${pkgdir}/etc/clipboard-go/config.json"
-  install -Dm644 "${srcdir}/Clipboard-Go-${pkgver}/clipboard-go.service" "${pkgdir}/etc/systemd/system/${pkgname}.service"
+  install -Dm644 "${srcdir}/Clipboard-Go-${pkgver}/clipboard-go.service" "${pkgdir}/usr/lib/systemd/user/${pkgname}.service"
 }
