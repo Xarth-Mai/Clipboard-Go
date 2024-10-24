@@ -15,6 +15,8 @@ import (
 	"strings"
 	"syscall"
 	"time"
+
+	i18n "github.com/Xarth-Mai/EasyI18n-Go"
 )
 
 // 服务器配置
@@ -33,7 +35,7 @@ type RequestData struct {
 
 func setClipboard(data string) error {
 	if data == "" {
-		return fmt.Errorf("输入数据为空")
+		return fmt.Errorf(i18n.Translate("Input data is empty"))
 	}
 	cmd := exec.Command("xclip", "-selection", "clipboard")
 	cmd.Stdin = strings.NewReader(data)
@@ -134,9 +136,9 @@ func handleRequest(w http.ResponseWriter, r *http.Request) {
 // startServer 启动 HTTP 服务器
 func startServer() {
 	http.HandleFunc("/", handleRequest)
-	log.Println("服务器启动中，监听端口", port)
+	log.Println(i18n.Translate("Server is starting, listening on port"), port)
 	if err := http.ListenAndServe(port, nil); err != nil {
-		log.Fatal("服务器启动失败:", err)
+		log.Fatal(i18n.Translate("Server startup failed:"), err)
 	}
 }
 
@@ -145,9 +147,14 @@ func main() {
 	sigs := make(chan os.Signal, 1)
 	signal.Notify(sigs, syscall.SIGINT, syscall.SIGTERM)
 
+	i18n.SetCustomTranslations(EasyI18nTranslations)
+
+	// Automatically set language
+	i18n.InitLanguage()
+
 	go startServer()
 
 	// 等待中断信号
 	<-sigs
-	fmt.Println("\n服务器已关闭")
+	fmt.Println("\n", i18n.Translate("Server is down"))
 }
