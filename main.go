@@ -147,14 +147,13 @@ func main() {
 	sigs := make(chan os.Signal, 1)
 	signal.Notify(sigs, syscall.SIGINT, syscall.SIGTERM)
 
+	// 自动设置翻译
 	i18n.SetCustomTranslations(EasyI18nTranslations)
-
-	// Automatically set language
 	i18n.InitLanguage()
 
 	go startServer()
 
 	// 等待中断信号
 	<-sigs
-	fmt.Println("\n", i18n.Translate("Server is down"))
+	fmt.Println("\n\b", i18n.Translate("Server is down"))
 }
