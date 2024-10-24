@@ -1,6 +1,14 @@
 # Clipboard-Go
-## It's MyGo!!!!!
+
 在 💻Linux 与 📱iOS 之间共享剪贴板
+
+## Install
+```
+paru -Syu clipboard-go
+systemctl --user daemon-reload
+systemctl --user start clipboard-go.service
+systemctl --user enable clipboard-go.service
+```
 
 ### iOS 快捷指令
 - **复制**: [复制剪贴板](https://www.icloud.com/shortcuts/82448695a1b8407a90e6abceee89ffac)
