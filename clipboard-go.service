@@ -6,7 +6,6 @@ After=network.target
 Type=simple
 ExecStart=/usr/bin/clipboard-go
 Restart=on-failure
-User=%U
 
 [Install]
 WantedBy=default.target
