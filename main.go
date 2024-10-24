@@ -21,16 +21,40 @@ import (
 
 // 服务器配置
 const (
-	port          = ":8777"
-	authPassword  = "1234"
-	maxTimestamps = 20
+	configFilePath = "/etc/clipboard-go/config.json"
+	maxTimestamps  = 20
 )
 
 // 记录使用过的时间戳及其顺序
 var usedTimestamps []string
 
+type Config struct {
+	Port         string `json:"port"`
+	AuthPassword string `json:"auth_password"`
+}
+
 type RequestData struct {
 	Data string `json:"data"`
+}
+
+var config Config
+
+func loadConfig() error {
+	file, err := os.Open(configFilePath)
+	if err != nil {
+		return err
+	}
+	defer func() {
+		if err := file.Close(); err != nil {
+			log.Printf("Error closing file: %v", err) // 记录关闭文件的错误
+		}
+	}()
+
+	decoder := json.NewDecoder(file)
+	if err := decoder.Decode(&config); err != nil {
+		return err
+	}
+	return nil
 }
 
 func setClipboard(data string) error {
@@ -60,7 +84,7 @@ func md5Hash(input string) string {
 
 // authenticate 进行身份验证
 func authenticate(timestamp, hash string) bool {
-	return md5Hash(timestamp+authPassword) == hash
+	return md5Hash(timestamp+config.AuthPassword) == hash
 }
 
 // isTimestampValid 检查时间戳是否有效（不超过10秒，并且未使用过）
@@ -136,8 +160,8 @@ func handleRequest(w http.ResponseWriter, r *http.Request) {
 // startServer 启动 HTTP 服务器
 func startServer() {
 	http.HandleFunc("/", handleRequest)
-	log.Println(i18n.Translate("Server is starting, listening on port"), port)
-	if err := http.ListenAndServe(port, nil); err != nil {
+	log.Println(i18n.Translate("Server is starting, listening on port"), config.Port)
+	if err := http.ListenAndServe(config.Port, nil); err != nil {
 		log.Fatal(i18n.Translate("Server startup failed:"), err)
 	}
 }
@@ -150,6 +174,10 @@ func main() {
 	// 自动设置翻译
 	i18n.SetCustomTranslations(EasyI18nTranslations)
 	i18n.InitLanguage()
+
+	if err := loadConfig(); err != nil {
+		log.Fatal(i18n.Translate("Failed to load config:"), err)
+	}
 
 	go startServer()
 

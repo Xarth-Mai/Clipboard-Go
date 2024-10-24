@@ -6,6 +6,7 @@ var EasyI18nTranslations = map[string]map[string]string{
 		"Server is starting, listening on port": "Server is starting, listening on port",
 		"Server startup failed:":                "Server startup failed:",
 		"Server is down":                        "Server is down",
+		"Failed to load config:":                "Failed to load config:",
 	},
 
 	"zhs": {
@@ -13,6 +14,7 @@ var EasyI18nTranslations = map[string]map[string]string{
 		"Server is starting, listening on port": "服务器正在启动，监听端口",
 		"Server startup failed:":                "服务器启动失败：",
 		"Server is down":                        "服务器已关闭",
+		"Failed to load config:":                "加载配置失败：",
 	},
 
 	"zht": {
@@ -20,6 +22,7 @@ var EasyI18nTranslations = map[string]map[string]string{
 		"Server is starting, listening on port": "伺服器正在啟動，監聽端口",
 		"Server startup failed:":                "伺服器啟動失敗：",
 		"Server is down":                        "伺服器已關閉",
+		"Failed to load config:":                "載入配置失敗：",
 	},
 
 	"jp": {
@@ -27,5 +30,6 @@ var EasyI18nTranslations = map[string]map[string]string{
 		"Server is starting, listening on port": "サーバーが起動中で、ポートをリスニングしています",
 		"Server startup failed:":                "サーバーの起動に失敗しました：",
 		"Server is down":                        "サーバーがダウンしています",
+		"Failed to load config:":                "設定の読み込みに失敗しました：",
 	},
 }
