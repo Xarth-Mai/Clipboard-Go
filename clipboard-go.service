@@ -1,0 +1,12 @@
+[Unit]
+Description=Clipboard-Go Service
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/clipboard-go
+Restart=on-failure
+User=nobody
+
+[Install]
+WantedBy=multi-user.target
