@@ -2,7 +2,7 @@
 pkgname=clipboard-go
 pkgver=1.0.1
 pkgrel=1
-pkgdesc="A simple clipboard management tool written in Go"
+pkgdesc="Share clipboard between 💻Linux & 📱iOS"
 arch=('any')
 url="https://github.com/Xarth-Mai/Clipboard-Go"
 license=('MPL2')
