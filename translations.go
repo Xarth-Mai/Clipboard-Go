@@ -15,7 +15,7 @@ var EasyI18nTranslations = map[string]map[string]string{
 		"Server is starting, listening on port": "服务器正在启动，监听端口",
 		"Server startup failed:":                "服务器启动失败：",
 		"Failed to load config:":                "加载配置失败：",
-		"Server forced to shutdown:":            "服务器被强制关闭",
+		"Server forced to shutdown:":            "服务器被强制关闭:",
 		"Shutting down server...":               "正在关闭服务器...",
 	},
 
@@ -24,7 +24,7 @@ var EasyI18nTranslations = map[string]map[string]string{
 		"Server is starting, listening on port": "伺服器正在啟動，監聽端口",
 		"Server startup failed:":                "伺服器啟動失敗：",
 		"Failed to load config:":                "載入配置失敗：",
-		"Server forced to shutdown:":            "伺服器被強制關閉",
+		"Server forced to shutdown:":            "伺服器被強制關閉:",
 		"Shutting down server...":               "正在關閉伺服器...",
 	},
 
@@ -33,7 +33,7 @@ var EasyI18nTranslations = map[string]map[string]string{
 		"Server is starting, listening on port": "サーバーが起動中で、ポートをリスニングしています",
 		"Server startup failed:":                "サーバーの起動に失敗しました：",
 		"Failed to load config:":                "設定の読み込みに失敗しました：",
-		"Server forced to shutdown:":            "サーバーが強制終了されました",
+		"Server forced to shutdown:":            "サーバーが強制終了されました:",
 		"Shutting down server...":               "サーバーをシャットダウンしています...",
 	},
 }
