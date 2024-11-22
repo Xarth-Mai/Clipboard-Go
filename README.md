@@ -2,7 +2,7 @@
 
 Share clipboard between 💻 Linux and 📱 iOS
 
-## Install
+## 💡 Install
 
 ```bash
 paru -Syu clipboard-go
@@ -14,7 +14,7 @@ systemctl --user enable --now clipboard-go.service
 - **Copy**: [Copy Clipboard](https://www.icloud.com/shortcuts/82448695a1b8407a90e6abceee89ffac)
 - **Paste**: [Paste Clipboard](https://www.icloud.com/shortcuts/da413599218348ea94a2ad9f1c0fa0ab)
 
-## API
+## 📝 API
 
 ### Overview
 The API provides functions to interact with the clipboard, including retrieving and setting clipboard contents. Requests are sent over HTTP in JSON format.
