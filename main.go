@@ -1,9 +1,11 @@
 package main
 
 import (
+	"context"
 	"crypto/md5"
 	"encoding/hex"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io"
 	"log"
@@ -158,12 +160,20 @@ func handleRequest(w http.ResponseWriter, r *http.Request) {
 }
 
 // startServer 启动 HTTP 服务器
-func startServer() {
+func startServer() *http.Server {
+	server := &http.Server{
+		Addr:    config.Port,
+		Handler: http.DefaultServeMux,
+	}
+
 	http.HandleFunc("/", handleRequest)
 	log.Println(i18n.Translate("Server is starting, listening on port"), config.Port)
-	if err := http.ListenAndServe(config.Port, nil); err != nil {
+
+	if err := server.ListenAndServe(); err != nil && !errors.Is(err, http.ErrServerClosed) {
 		log.Fatal(i18n.Translate("Server startup failed:"), err)
 	}
+
+	return server
 }
 
 func main() {
@@ -179,9 +189,16 @@ func main() {
 		log.Fatal(i18n.Translate("Failed to load config:"), err)
 	}
 
-	go startServer()
+	server := startServer()
 
 	// 等待中断信号
 	<-sigs
-	fmt.Println("\n\b", i18n.Translate("Server is down"))
+	log.Println(i18n.Translate("Shutting down server..."))
+
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	if err := server.Shutdown(ctx); err != nil {
+		log.Fatal(i18n.Translate("Server forced to shutdown:"), err)
+	}
 }
