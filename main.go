@@ -21,7 +21,7 @@ import (
     i18n "github.com/Xarth-Mai/EasyI18n-Go"
 )
 
-// 服务器配置
+// 程序配置
 const (
     configFilePath = "/etc/clipboard-go/config.json"
     maxTimestamps  = 20
@@ -30,17 +30,21 @@ const (
 // 记录使用过的时间戳及其顺序
 var usedTimestamps []string
 
+// RequestData 期望请求体
+type RequestData struct {
+    Data string `json:"data"`
+}
+
+// Config HTTP服务器配置
 type Config struct {
     Port         string `json:"port"`
     AuthPassword string `json:"auth_password"`
 }
 
-type RequestData struct {
-    Data string `json:"data"`
-}
-
+// config 加载配置
 var config Config
 
+// loadConfig 加载配置
 func loadConfig() error {
     file, err := os.Open(configFilePath)
     if err != nil {
@@ -59,6 +63,7 @@ func loadConfig() error {
     return nil
 }
 
+// setClipboard 设置剪贴板
 func setClipboard(data string) error {
     if data == "" {
         return fmt.Errorf(i18n.Translate("Input data is empty"))
@@ -159,8 +164,8 @@ func handleRequest(w http.ResponseWriter, r *http.Request) {
     }
 }
 
-// startServer 启动 HTTP 服务器
-func startServer() *http.Server {
+// initServer 初始化 HTTP 服务器
+func initServer() *http.Server {
     server := &http.Server{
         Addr:    config.Port,
         Handler: http.DefaultServeMux,
@@ -185,7 +190,7 @@ func main() {
         log.Fatal(i18n.Translate("Failed to load config:"), err)
     }
 
-    server := startServer()
+    server := initServer()
 
     // 在 goroutine 中启动 server
     go func() {
