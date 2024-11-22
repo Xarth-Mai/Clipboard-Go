@@ -69,3 +69,6 @@ The API provides functions to interact with the clipboard, including retrieving 
   ```text
   MD5(timestamp + authPassword)
   ```
+
+## 🌟Stargazers over time
+[![Stargazers over time](https://starchart.cc/Xarth-Mai/Clipboard-Go.svg?variant=adaptive)](https://starchart.cc/Xarth-Mai/Clipboard-Go)
